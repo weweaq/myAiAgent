@@ -2,11 +2,13 @@ spring:
   application:
     name: my-ai-agent
   ai:
-    dashscope:
-      api-key: wewe-your-api-key
+    ollama:
+      base-url: http://localhost:11434
       chat:
-        options:
-          model: qwen-plus
+        model: gemma3:4b
+
+
+
 server:
   port: 8123
   servlet:
