@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
 
@@ -78,11 +78,11 @@
         <!--Spring AI 默认没有支持所有的大模型（尤其是国产的），更多的是支持兼容 OpenAI API 的大模型的集成，参考 官方的模型对比。
         因此，我们如果想要调用阿里系大模型（比如通义千问），推荐直接使用阿里自主封装的 Spring AI Alibaba 框架，它不仅能直接继承阿里系大模型，用起来更方便，而且与标准的 Spring AI 保持兼容。
         -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud.ai</groupId>-->
-<!--            <artifactId>spring-ai-alibaba-starter</artifactId>-->
-<!--            <version>1.0.0-M6.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud.ai</groupId>
+            <artifactId>spring-ai-alibaba-starter</artifactId>
+            <version>1.0.0-M6.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.ai</groupId>
