@@ -1,15 +1,14 @@
 package com.example.myaiagent.app;
 
-import com.example.myaiagent.advisor.MyLoggerAdvisor;
 import com.example.myaiagent.advisor.ReReadingAdvisor;
 import com.example.myaiagent.chatmemory.FileBasedChatMemory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 
-@Component
 @Slf4j
+@Component
 public class LoveApp {
 
     private final ChatClient chatClient;
@@ -28,19 +27,27 @@ public class LoveApp {
             "恋爱状态询问沟通、习惯差异引发的矛盾；已婚状态询问家庭责任与亲属关系处理的问题。" +
             "引导用户详述事情经过、对方反应及自身想法，以便给出专属解决方案。";
 
-    public LoveApp(ChatModel dashscopeChatModel) {
+    /**
+     * # 只能用其中一个模型，要不然报错
+     * Parameter 0 of constructor in com.example.myaiagent.app.LoveApp required a single bean, but 3 were found:
+     * 	- dashscopeChatModel: defined by method 'dashscopeChatModel' in class path resource [com/alibaba/cloud/ai/autoconfigure/dashscope/DashScopeAutoConfiguration$DashScopeChatConfiguration.class]
+     * 	- ollamaChatModel: defined by method 'ollamaChatModel' in class path resource [org/springframework/ai/autoconfigure/ollama/OllamaAutoConfiguration.class]
+     * 	- openAiChatModel: defined by method 'openAiChatModel' in class path resource [org/springframework/ai/autoconfigure/openai/OpenAiAutoConfiguration.class]
+     * @param model
+     */
+    public LoveApp(@Qualifier("openAiChatModel") ChatModel model) {
         // 初始化基于内存的对话记忆
 //        ChatMemory chatMemory = new InMemoryChatMemory();
 
-                // 初始化基于文件的对话记忆
+        // 初始化基于文件的对话记忆
         String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
         ChatMemory chatMemory = new FileBasedChatMemory(fileDir);
 
-        chatClient = ChatClient.builder(dashscopeChatModel)
+        chatClient = ChatClient.builder(model)
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor(), new ReReadingAdvisor()
+                        new ReReadingAdvisor()
                 )
                 .build();
     }
