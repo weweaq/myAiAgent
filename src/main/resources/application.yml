@@ -14,7 +14,7 @@ spring:
       api-key: xxx
       chat:
         options:
-          model: qwen-plus
+          model: deepseek-ai/DeepSeek-R1-0528-Qwen3-8B
     openai:
       # 硅基流动API接口
       base-url: https://api.siliconflow.cn
@@ -23,7 +23,7 @@ spring:
       chat:
         options:
           # 模型名称(注意使用场景，这里是对话场景)
-          model: Qwen/QwQ-32B
+          model: deepseek-ai/DeepSeek-R1-0528-Qwen3-8B
 
 # 接口文档配置, 访问 http://localhost:8123/api/doc.html
 # https://doc.xiaominfo.com/docs/quick-start#spring-boot-3
