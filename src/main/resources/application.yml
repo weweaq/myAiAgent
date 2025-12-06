@@ -19,7 +19,7 @@ spring:
       # 硅基流动API接口
       base-url: https://api.siliconflow.cn
       # api-key 密匙
-      api-key: sk-zqfumgcbmkcxdnoxxilywkhhnnngtgdthtnjdamslcukqiul
+      api-key: xxx
       chat:
         options:
           # 模型名称(注意使用场景，这里是对话场景)
