@@ -18,14 +18,15 @@ spring:
     openai:
       # 硅基流动API接口
       base-url: https://api.siliconflow.cn
-      # api-key 密匙
-      api-key: xxx
+      # api-key 密匙放到环境变量
+      api-key: ${openai_api_key}
       chat:
         options:
           # 模型名称(注意使用场景，这里是对话场景)
           model: Qwen/QwQ-32B
 
-# 接口文档配置
+# 接口文档配置, 访问 http://localhost:8123/api/doc.html
+# https://doc.xiaominfo.com/docs/quick-start#spring-boot-3
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
