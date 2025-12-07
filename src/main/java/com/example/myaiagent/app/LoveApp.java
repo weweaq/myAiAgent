@@ -16,6 +16,7 @@ import java.util.List;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 
+
 @Slf4j
 @Component
 public class LoveApp {
@@ -30,9 +31,10 @@ public class LoveApp {
     /**
      * # 只能用其中一个模型，要不然报错
      * Parameter 0 of constructor in com.example.myaiagent.app.LoveApp required a single bean, but 3 were found:
-     * 	- dashscopeChatModel: defined by method 'dashscopeChatModel' in class path resource [com/alibaba/cloud/ai/autoconfigure/dashscope/DashScopeAutoConfiguration$DashScopeChatConfiguration.class]
-     * 	- ollamaChatModel: defined by method 'ollamaChatModel' in class path resource [org/springframework/ai/autoconfigure/ollama/OllamaAutoConfiguration.class]
-     * 	- openAiChatModel: defined by method 'openAiChatModel' in class path resource [org/springframework/ai/autoconfigure/openai/OpenAiAutoConfiguration.class]
+     * - dashscopeChatModel: defined by method 'dashscopeChatModel' in class path resource [com/alibaba/cloud/ai/autoconfigure/dashscope/DashScopeAutoConfiguration$DashScopeChatConfiguration.class]
+     * - ollamaChatModel: defined by method 'ollamaChatModel' in class path resource [org/springframework/ai/autoconfigure/ollama/OllamaAutoConfiguration.class]
+     * - openAiChatModel: defined by method 'openAiChatModel' in class path resource [org/springframework/ai/autoconfigure/openai/OpenAiAutoConfiguration.class]
+     *
      * @param model
      */
     public LoveApp(@Qualifier("openAiChatModel") ChatModel model) {
@@ -46,7 +48,7 @@ public class LoveApp {
         chatClient = ChatClient.builder(model)
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
-                        new MessageChatMemoryAdvisor(chatMemory),
+                        MessageChatMemoryAdvisor.builder(chatMemory).build(),
                         new ReReadingAdvisor()
                 )
                 .build();

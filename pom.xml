@@ -31,11 +31,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-openai</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -45,8 +40,6 @@
             <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -72,34 +65,31 @@
             <version>4.4.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.alibaba/dashscope-sdk-java -->
+        <!--Spring AI -->
+
+        <!-- 引入模型 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-openai -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dashscope-sdk-java</artifactId>
-            <version>2.19.1</version>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-openai</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
-        <!--Spring AI 默认没有支持所有的大模型（尤其是国产的），更多的是支持兼容 OpenAI API 的大模型的集成，参考 官方的模型对比。
-        因此，我们如果想要调用阿里系大模型（比如通义千问），推荐直接使用阿里自主封装的 Spring AI Alibaba 框架，它不仅能直接继承阿里系大模型，用起来更方便，而且与标准的 Spring AI 保持兼容。
-        -->
-        <dependency>
-            <groupId>com.alibaba.cloud.ai</groupId>
-            <artifactId>spring-ai-alibaba-starter</artifactId>
-            <version>1.0.0-M6.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.victools</groupId>
-            <artifactId>jsonschema-generator</artifactId>
-            <version>4.38.0</version>
-        </dependency>
-
+        <!-- 引入记忆机制存在内存里 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-openai -->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
             <version>5.6.2</version>
         </dependency>
+
+        <!-- chatClient advisor那些 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-core -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-core</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
