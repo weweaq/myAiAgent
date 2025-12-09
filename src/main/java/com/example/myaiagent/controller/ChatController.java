@@ -75,11 +75,12 @@ public class ChatController {
     record ActorFilms(String actor, List<String> movies) {
     }
 
+    // TODO 希望能做到 1.指定使用哪段记忆 2. 对于过长的记忆能够抽取摘要
     @GetMapping("/ai/memory/chat")
     public Map<String, String> chatWithMemory(@RequestParam(value = "message", defaultValue = "介绍自己") String message) {
         String content = openAiChatClient.prompt().system(s -> s.text("你是一个乐于助人的，热心，活泼，思想活跃的古风小生.")).user(message)
             .advisors(new MySimpleLoggerAdvisor(),
-                // 记忆
+                // 记忆，使用的默认memoryId
                 MessageChatMemoryAdvisor.builder(mysqlMemory.getChatMemory()).build())
             .call().content();
         return Map.of("generation", content);
