@@ -1,11 +1,11 @@
 package com.example.myaiagent.app;
 
 import com.example.myaiagent.advisor.ReReadingAdvisor;
-import com.example.myaiagent.chatmemory.FileBasedChatMemory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,7 +43,7 @@ public class LoveApp {
 
         // 初始化基于文件的对话记忆
         String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
-        ChatMemory chatMemory = new FileBasedChatMemory(fileDir);
+        ChatMemory chatMemory = new InMemoryChatMemory();
 
         chatClient = ChatClient.builder(model)
                 .defaultSystem(SYSTEM_PROMPT)

@@ -27,7 +27,15 @@ spring:
       chat:
         options:
           # 模型名称(注意使用场景，这里是对话场景)
-          model: deepseek-ai/DeepSeek-R1-0528-Qwen3-8B
+          model: internlm/internlm2_5-7b-chat
+  datasource:
+    # 现在依赖实现的JdbcChatMemoryRepository有问题，插入会用双引号，也太坑了
+    url: jdbc:mysql://localhost:3306/vboss?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&sessionVariables=sql_mode='ANSI_QUOTES'
+    username: root
+    password: ${spring.datasource.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
 
 # 接口文档配置, 访问 http://localhost:8123/api/doc.html
 # https://doc.xiaominfo.com/docs/quick-start#spring-boot-3
@@ -47,3 +55,16 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
+# 设置xxx.xxx.xxx包下打debug日志
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
+# 全都打
+#logging:
+#  level:
+#    root: DEBUG

@@ -64,6 +64,12 @@
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>4.4.0</version>
         </dependency>
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
 
         <!--Spring AI -->
 
@@ -75,10 +81,24 @@
         </dependency>
 
         <!-- 引入记忆机制存在内存里 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-openai -->
+<!--        <dependency>-->
+<!--            <groupId>com.esotericsoftware</groupId>-->
+<!--            <artifactId>kryo</artifactId>-->
+<!--            <version>5.6.2</version>-->
+<!--        </dependency>-->
+
+        <!-- 存mysql 数据库 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-model-chat-memory-repository-jdbc -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-model-chat-memory-repository-jdbc</artifactId>-->
+<!--            <version>1.1.1</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-chat-memory-jdbc -->
         <dependency>
-            <groupId>com.esotericsoftware</groupId>
-            <artifactId>kryo</artifactId>
-            <version>5.6.2</version>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-chat-memory-jdbc</artifactId>
+            <version>1.0.0-M8</version>
         </dependency>
 
         <!-- chatClient advisor那些 https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-core -->
@@ -123,6 +143,14 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>
