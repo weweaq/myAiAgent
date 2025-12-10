@@ -2,6 +2,7 @@ package com.example.myaiagent.controller;
 
 import com.example.myaiagent.advisor.MySimpleLoggerAdvisor;
 import com.example.myaiagent.chatmemory.MysqlMemory;
+import com.example.myaiagent.controller.vo.MemoryChatReq;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.AdvisorParams;
 import org.springframework.ai.chat.client.ChatClient;
@@ -11,10 +12,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -75,13 +73,15 @@ public class ChatController {
     record ActorFilms(String actor, List<String> movies) {
     }
 
-    // TODO 希望能做到 1.指定使用哪段记忆 2. 对于过长的记忆能够抽取摘要
-    @GetMapping("/ai/memory/chat")
-    public Map<String, String> chatWithMemory(@RequestParam(value = "message", defaultValue = "介绍自己") String message) {
-        String content = openAiChatClient.prompt().system(s -> s.text("你是一个乐于助人的，热心，活泼，思想活跃的古风小生.")).user(message)
-            .advisors(new MySimpleLoggerAdvisor(),
+    // TODO 希望能做到 2. 对于过长的记忆能够抽取摘要
+    @PostMapping("/ai/memory/chat")
+    public Map<String, String> chatWithMemory(@RequestBody MemoryChatReq req) {
+
+        String content = openAiChatClient.prompt().system(s -> s.text("你是一个乐于助人的，热心，活泼，思想活跃的古风小生."))
+            .user(req.getMessage()).advisors(new MySimpleLoggerAdvisor(),
                 // 记忆，使用的默认memoryId
-                MessageChatMemoryAdvisor.builder(mysqlMemory.getChatMemory()).build())
+                MessageChatMemoryAdvisor.builder(mysqlMemory.getChatMemory()).conversationId(req.getConversationId())
+                    .build())
             .call().content();
         return Map.of("generation", content);
     }
